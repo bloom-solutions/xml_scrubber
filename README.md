@@ -1,5 +1,7 @@
 # XMLScrubber
 
+[![Build Status](https://travis-ci.org/imacchiato/xml_scrubber.svg?branch=master)](https://travis-ci.org/imacchiato/xml_scrubber)
+
 A simple utility to remove sensitive info from XML. It's like [loofah](https://github.com/flavorjones/loofah) but meant to be simple - to log XML requests and responses.
 
 ## Installation
