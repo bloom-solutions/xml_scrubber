@@ -1,8 +1,6 @@
 # XMLScrubber
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/xml_scrubber`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A simple utility to remove sensitive info from XML. It's like [loofah](https://github.com/flavorjones/loofah) but meant to be simple - to log XML requests and responses.
 
 ## Installation
 
@@ -22,7 +20,29 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+The following scrubs node names that match with `/password/i` (you can pass regex or a string for an exact match)
+
+```ruby
+xml = "<xml><password>sekret</password></xml>"
+XMLScrubber.(xml, name: {matches: /password/i}, scrub_with: "*****")
+# <xml><password>*****</password></xml>
+```
+
+- `ignore_case`: defaults to `true`
+- `scrub_with`: defaults to `[filtered]`
+- It ignores namespaces (i.e. this still works with `<xml xmlns:x="http://schemas.xmlsoap.org/soap/envelope/"><x:password>sekret</x:password></xml>`)
+
+Specify multiple directives on `name`:
+
+```ruby
+XMLScrubber.(
+  xml,
+  {name: {matches: /password/i},
+  {name: {matches: /secret/i},
+)
+```
+
+The only directive supported at the moment is `name`. Others in the future may include `attr` (for attribute), `content`, etc.
 
 ## Development
 
