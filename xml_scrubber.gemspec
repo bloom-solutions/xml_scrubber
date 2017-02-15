@@ -5,7 +5,7 @@ require 'xml_scrubber/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "xml_scrubber"
-  spec.version       = XmlScrubber::VERSION
+  spec.version       = XMLScrubber::VERSION
   spec.authors       = ["Ramon Tayag"]
   spec.email         = ["ramon.tayag@gmail.com"]
 

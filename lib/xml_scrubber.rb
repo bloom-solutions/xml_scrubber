@@ -1,5 +1,5 @@
 require "xml_scrubber/version"
 
-module XmlScrubber
+module XMLScrubber
   # Your code goes here...
 end
