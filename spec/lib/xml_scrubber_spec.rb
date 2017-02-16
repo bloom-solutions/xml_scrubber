@@ -53,6 +53,35 @@ describe XMLScrubber do
       end
     end
 
+    context "given an array of directives" do
+      let(:dirty_xml) do
+        <<-XML
+        <xml xmlns:x="http://schemas.xmlsoap.org/soap/envelope/">
+          <x:username>uname</x:username>
+          <x:paSSword>sekret</x:paSSword>
+          <username>uname-no-ns</username>
+        </xml>
+        XML
+      end
+      subject(:resulting_xml) do
+        XMLScrubber.(
+          dirty_xml,
+          [
+            {name: {matches: "x:password"}},
+            {name: {matches: "x:username"}},
+          ]
+        )
+      end
+      subject(:resulting_tree) { Nokogiri.XML(resulting_xml) }
+
+      it "scrubs all matching nodes by name" do
+        expect(resulting_tree.xpath("//x:username").text).
+          to eq described_class::DEFAULT_REPLACEMENT
+        expect(resulting_tree.xpath("//x:paSSword").text).to eq "sekret"
+        expect(resulting_tree.xpath("//username").text).to eq "uname-no-ns"
+      end
+    end
+
     context "given an unknown directive" do
       it "raises an error" do
         expect {
