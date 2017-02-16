@@ -8,7 +8,7 @@ module XMLScrubber
   def self.call(xml, *directives)
     tree = Nokogiri.XML(xml)
     tree.traverse do |node|
-      Array(directives).each do |directive|
+      Array(directives).flatten.each do |directive|
         node.content = DEFAULT_REPLACEMENT if applies_to_node?(directive, node)
       end
     end
